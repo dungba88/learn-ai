@@ -1,4 +1,4 @@
-MNIST with Tensorflow
+# MNIST with Tensorflow
 
 1. Softmax regression:
     - Loss function: cross-entropy
