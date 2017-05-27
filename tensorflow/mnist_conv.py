@@ -98,7 +98,7 @@ def train(mnist):
 
     sess.run(tf.global_variables_initializer())
 
-    iterations = 100
+    iterations = 1000
     batch_size = 100
 
     for i in range(iterations):
@@ -110,9 +110,29 @@ def train(mnist):
         train_step.run(feed_dict={x_train: batch[0], y_train: batch[1]})
 
     print("calculating accuracy...")
-    eval_accuracy = accuracy.eval(feed_dict={
-        x_train: mnist.test.images, y_train: mnist.test.labels})
+    eval_accuracy = calculate_accuracy_batch(accuracy, mnist, x_train, y_train)
     print("test accuracy %g"%eval_accuracy)
+
+def calculate_accuracy_batch(accuracy, mnist, x_train, y_train):
+    """calculate accuracy by batch"""
+    import math
+
+    batch_size = 500
+    example_size = get_example_size(mnist.test.images)
+    iterations = math.ceil(example_size / batch_size)
+    weighted_accuracy = 0
+
+    for _ in range(iterations):
+        batch = mnist.test.next_batch(batch_size)
+        test_accuracy = accuracy.eval(feed_dict={
+            x_train: batch[0], y_train: batch[1]})
+        weighted_accuracy += get_example_size(batch[0]) * test_accuracy
+
+    return weighted_accuracy / example_size
+
+def get_example_size(tensor):
+    """get number of examples, i.e the first dimension"""
+    return tensor.shape[0]
 
 def run():
     """run the application"""
