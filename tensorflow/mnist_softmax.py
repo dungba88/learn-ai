@@ -1,9 +1,6 @@
 """MNIST with tensorflow"""
 
-def download_data():
-    """download MNIST data"""
-    from tensorflow.examples.tutorials.mnist import input_data
-    return input_data.read_data_sets("MNIST_data/", one_hot=True)
+from .utils import download_data
 
 def train(mnist):
     """train the model with MNIST"""
