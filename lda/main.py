@@ -29,7 +29,7 @@ def extract_nmf(comments):
     vectorizer = TfidfVectorizer(stop_words='english')
     X_train = vectorizer.fit_transform(comments)
     feature_names = vectorizer.get_feature_names()
-    model = NMF(n_components=N_TOPICS, random_state=1, max_iter=200, init='random')
+    model = NMF(n_components=N_TOPICS, random_state=1, max_iter=1500, init='random')
     model.fit(X_train)
     print('NMF extractor')
     display_topics(model, feature_names)
