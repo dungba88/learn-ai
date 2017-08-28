@@ -1,4 +1,4 @@
-"""keywords extraction using LDA"""
+"""keywords extraction using LDA and NMF"""
 
 import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
