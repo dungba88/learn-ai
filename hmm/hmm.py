@@ -12,11 +12,11 @@ class HMM(object):
     initial_prob is an array of length N, whose element a[i] is the probability that
     the initial state will be state i-th
 
-    the state_prob is a NxN whose each cell a[i, j] is the probability to transition
+    the state_prob is a NxN whose each cell a[i, j] is the probability of transition
     from state i-th to state j-th.
 
-    the emissions_prob is a NxM matrix which each cell a[i, j] is the probability
-    to emit value j-th from state i-th
+    the emissions_prob is a NxM matrix whose each cell a[i, j] is the probability
+    of emitting value j-th from state i-th
     """
 
     def __init__(self, init_prob=None, state_prob=None, emission_prob=None):
