@@ -86,7 +86,7 @@ if __name__ == '__main__':
         'SH'
     ]
 
-    INIT_PROB = [0.4, 0.5, 0.1]  # singapore rainy seasons
+    INIT_PROB = [0.35, 0.55, 0.1]  # singapore rainy seasons
     STATE_PROB = [
         [0.4, 0.4, 0.2],    # cloudy -> 40% cloudy, 40% rainy, 20% sunny
         [0.6, 0.3, 0.1],    # rainy -> 60% cloudy, 30% rainy, 10% sunny
