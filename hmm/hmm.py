@@ -69,7 +69,7 @@ def vectorize(sequence, emissions):
         vector.append(emissions.index(sequence[i]))
     return vector
 
-# this program calculates the probability of a sequence of mood of a person
+# this program calculates the probability of a sequence of mood of an amateur astronomer
 # in singapore based on the weather
 if __name__ == '__main__':
     STATES = 'CRS'          # cloudy / rainy / sunny
