@@ -74,17 +74,9 @@ def vectorize(sequence, emissions):
 if __name__ == '__main__':
     STATES = 'CRS'          # cloudy / rainy / sunny
     EMISSIONS = 'AHS'       # angry / happy / sad
-    SEQUENCES = [
-        'AA',
-        'HH',
-        'SS',
-        'AH',
-        'HA',
-        'AS',
-        'SA',
-        'HS',
-        'SH'
-    ]
+
+    import itertools
+    SEQUENCES = [''.join(seq) for seq in itertools.product('AHS', repeat=2)]
 
     INIT_PROB = [0.35, 0.55, 0.1]  # singapore rainy seasons
     STATE_PROB = [
