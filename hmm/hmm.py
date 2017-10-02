@@ -41,24 +41,26 @@ class HMM(object):
         N = len(self.state_prob)
         T = len(sequence)
 
-        caches = [0] * T
+        caches = [[None] * N] * T
 
-        # caches[0] will be the probability of sequence[0:0]
-        # caches[0] = sum_i(emission prob (i -> sequence[0]) * initial prob (i))
+        # caches[0][i] will be the probability of state [i] emitting sequence[0:0]
+        # caches[0][i] = initial prob (i) * emission prob (i -> sequence[0])
+        caches[0] = []
         for i in range(0, N):
-            caches[0] += self.init_prob[i] * self.emission_prob[i][sequence[0]]
+            caches[0].append(self.init_prob[i] * self.emission_prob[i][sequence[0]])
 
-        # cache[t] will be the probability of sequence[0:t]
-        # cache[t] = sum_j(emission prob (j -> sequence[t]) * sum_i(transition prob (i -> j) * caches[t-1]))
-        for t in range(1, T):
-            caches[t] = 0
+        # cache[t][j] will be the probability of sequence[0:t] AND ends up in state j
+        # cache[t][j] = sum_i(caches[t-1][i] * transition prob (i -> j) * emission prob (j -> sequence[t]))
+        #             = sum_i(caches[t-1][i] * transition prob (i -> j)) * emission prob (j -> sequence[t])
+        for k in range(1, T):
+            caches[k] = []
             for j in range(0, N):
-                partial_sum = 0
+                partial_sum = 0 # probability of sequence[0:t-1] AND transition to state j
                 for i in range(0, N):
-                    partial_sum += caches[t-1] * self.state_prob[i][j]
-                caches[t] += partial_sum * self.emission_prob[j][sequence[t]]
+                    partial_sum += caches[k-1][i] * self.state_prob[i][j]
+                caches[k].append(partial_sum * self.emission_prob[j][sequence[k]])
 
-        return caches[T-1]
+        return sum(caches[T-1])
 
 def vectorize(sequence, emissions):
     """vectorize the sequence using emissions"""
@@ -73,11 +75,15 @@ if __name__ == '__main__':
     STATES = 'CRS'          # cloudy / rainy / sunny
     EMISSIONS = 'AHS'       # angry / happy / sad
     SEQUENCES = [
-        'HHHHHHH',
-        'AAAAAAA',
-        'SSSSSSS',
-        'HHHAAAS',
-        'SSAAHHS'
+        'AA',
+        'HH',
+        'SS',
+        'AH',
+        'HA',
+        'AS',
+        'SA',
+        'HS',
+        'SH'
     ]
 
     INIT_PROB = [0.4, 0.5, 0.1]  # singapore rainy seasons
