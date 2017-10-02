@@ -41,7 +41,7 @@ class HMM(object):
         N = len(self.state_prob)
         T = len(sequence)
 
-        caches = []
+        caches = [[None] * N] * T
 
         # caches[0][i] will be the probability of state [i] emitting sequence[0:0]
         # caches[0][i] = initial prob (i) * emission prob (i -> sequence[0])
