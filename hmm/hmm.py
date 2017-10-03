@@ -87,8 +87,11 @@ class HMM(object):
             for j in range(N):
                 # the probability of seq[0:t-1] and ends up in state j
                 partial_sum = [caches[t-1][i] * self.state_prob[i][j] for i in range(N)]
+
                 max_prob = max(partial_sum)
                 caches[t][j] = max_prob * self.emission_prob[j][seq[t]]
+
+                # the state that maximize the probability above
                 tracks[t][j] = partial_sum.index(max_prob)
 
         max_track = [0 for _ in range(T)]
