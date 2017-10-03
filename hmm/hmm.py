@@ -129,7 +129,7 @@ def main():
         [0.55, 0.35, 0.15]   # sunny -> 45% cloudy, 45% rainy, 10% sunny
     ]
     emission_prob = [
-        [0.2, 0.2, 0.6],    # cloudy -> 20% angry, 20% happy, 60% sad
+        [0.25, 0.15, 0.6],    # cloudy -> 25% angry, 15% happy, 60% sad
         [0.7, 0.05, 0.25],  # rainy -> 70% angry, 5% happy, 25% sad
         [0.05, 0.9, 0.05]   # sunny -> 5% angry, 90% happy, 5% sad
     ]
