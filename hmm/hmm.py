@@ -111,41 +111,41 @@ def vectorize(sequence, emissions):
 
 def track_to_state(track, states):
     """convert track to human readable states"""
-    return ''.join([states[i] for i in track])
+    return ' -> '.join([states[i] for i in track])
 
 def main():
     """
     this program calculates the probability of a sequence of mood of an amateur astronomer
     in singapore based on the weather
     """
-    STATES = 'CRS'           # cloudy / rainy / sunny
-    EMISSIONS = 'AHS'       # angry / happy / sad
-    SEQ_LEN = 3             # define the length of sequence
+    states = ['cloudy', 'rainy', 'sunny']
+    emissions = 'AHS'       # angry / happy / sad
+    seq_len = 3             # define the length of sequence
 
-    import itertools
-    SEQUENCES = [''.join(seq) for seq in itertools.product(EMISSIONS, repeat=SEQ_LEN)]
-
-    INIT_PROB = [0.35, 0.55, 0.1]  # singapore rainy seasons, 35% cloudy, 55% sunny, 10% sunny
-    STATE_PROB = [
+    init_prob = [0.35, 0.55, 0.1]  # singapore rainy seasons, 35% cloudy, 55% sunny, 10% sunny
+    state_prob = [
         [0.4, 0.4, 0.2],    # cloudy -> 40% cloudy, 40% rainy, 20% sunny
         [0.6, 0.3, 0.1],    # rainy -> 60% cloudy, 30% rainy, 10% sunny
         [0.55, 0.35, 0.15]   # sunny -> 45% cloudy, 45% rainy, 10% sunny
     ]
-    EMISSION_PROB = [
+    emission_prob = [
         [0.2, 0.2, 0.6],    # cloudy -> 20% angry, 20% happy, 60% sad
         [0.7, 0.05, 0.25],  # rainy -> 70% angry, 5% happy, 25% sad
         [0.05, 0.9, 0.05]   # sunny -> 5% angry, 90% happy, 5% sad
     ]
 
-    model = HMM(INIT_PROB, STATE_PROB, EMISSION_PROB)
-    for seq in SEQUENCES:
-        vectorized_seq = vectorize(seq, EMISSIONS)
+    import itertools
+    sequences = [''.join(seq) for seq in itertools.product(emissions, repeat=seq_len)]
+
+    model = HMM(init_prob, state_prob, emission_prob)
+    for seq in sequences:
+        vectorized_seq = vectorize(seq, emissions)
         prob = model.forward(vectorized_seq)
         print('probability of sequence %s is %.2f%%' % (seq, prob * 100))
         prob = model.backward(vectorized_seq)
         print('probability of sequence %s calculate in backward is %.2f%%' % (seq, prob * 100))
         max_track = model.viterbi(vectorized_seq)
-        print('the most probable sequence of state is %s' % track_to_state(max_track, STATES))
+        print('the most probable sequence of state is %s' % track_to_state(max_track, states))
         print()
 
 if __name__ == '__main__':
