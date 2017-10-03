@@ -76,7 +76,7 @@ if __name__ == '__main__':
     EMISSIONS = 'AHS'       # angry / happy / sad
 
     import itertools
-    SEQUENCES = [''.join(seq) for seq in itertools.product('AHS', repeat=2)]
+    SEQUENCES = [''.join(seq) for seq in itertools.product(EMISSIONS, repeat=3)]
 
     INIT_PROB = [0.35, 0.55, 0.1]  # singapore rainy seasons
     STATE_PROB = [
