@@ -78,11 +78,11 @@ if __name__ == '__main__':
     import itertools
     SEQUENCES = [''.join(seq) for seq in itertools.product(EMISSIONS, repeat=3)]
 
-    INIT_PROB = [0.35, 0.55, 0.1]  # singapore rainy seasons
+    INIT_PROB = [0.35, 0.55, 0.1]  # singapore rainy seasons, 35% cloudy, 55% sunny, 10% sunny
     STATE_PROB = [
         [0.4, 0.4, 0.2],    # cloudy -> 40% cloudy, 40% rainy, 20% sunny
         [0.6, 0.3, 0.1],    # rainy -> 60% cloudy, 30% rainy, 10% sunny
-        [0.45, 0.45, 0.1]   # sunny -> 45% cloudy, 45% rainy, 10% sunny
+        [0.55, 0.35, 0.15]   # sunny -> 45% cloudy, 45% rainy, 10% sunny
     ]
     EMISSION_PROB = [
         [0.2, 0.2, 0.6],    # cloudy -> 20% angry, 20% happy, 60% sad
