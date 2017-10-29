@@ -75,9 +75,10 @@ def train_nn(NUM_CATEGORIES, X_to_train, y_to_train, X_to_test, y_to_test, layer
     for i in range(iterations):
         _, loss_val = sess.run([train_step, cross_entropy], feed_dict={x_train: X_to_train, y_train: y_to_train})
         if i % 100 == 0:
-            print('loss = ' + str(loss_val))
             train_acc_val = sess.run(accuracy, feed_dict={x_train: X_to_train, y_train: y_to_train})
             test_acc_val = sess.run(accuracy, feed_dict={x_train: X_to_test, y_train: y_to_test})
+
+            print('loss = ' + str(loss_val))
             print('train acc = ' + str(train_acc_val))
             print('test acc = ' + str(test_acc_val))
 
