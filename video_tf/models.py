@@ -1,9 +1,9 @@
 import tensorflow as tf
 
-def train_softmax(X_to_train, X_to_test, y_to_train, y_to_test):
+def train_softmax(NUM_CATEGORIES, X_to_train, X_to_test, y_to_train, y_to_test):
     """train the model"""
 
-    N = X.shape[1]
+    N = X_to_train.shape[1]
 
     # the input vector
     x_train = tf.placeholder(tf.float32, [None, N])
@@ -38,10 +38,10 @@ def train_softmax(X_to_train, X_to_test, y_to_train, y_to_test):
 
     return y_predict, y_train
 
-def train_nn(X_to_train, X_to_test, y_to_train, y_to_test):
+def train_nn(NUM_CATEGORIES, X_to_train, X_to_test, y_to_train, y_to_test):
     """train the model"""
 
-    N = X.shape[1]
+    N = X_to_train.shape[1]
 
     # the input vector
     x_train = tf.placeholder(tf.float32, [None, N])
