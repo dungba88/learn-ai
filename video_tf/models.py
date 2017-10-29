@@ -50,12 +50,11 @@ def train_nn(NUM_CATEGORIES, X_to_train, y_to_train, layers, iterations, learnin
     y_train = tf.placeholder(tf.float32, [None, NUM_CATEGORIES])
 
     layer_i = x_train
-    layer_i_relu = None
     for i in layers:
         layer_i = tf.layers.dense(layer_i, i)
-        layer_i_relu = tf.nn.relu(layer_i)
+        layer_i = tf.nn.relu(layer_i)
 
-    y_predict = tf.layers.dense(layer_i_relu, NUM_CATEGORIES)
+    y_predict = tf.layers.dense(layer_i, NUM_CATEGORIES)
 
     # the loss function
     cross_entropy = tf.reduce_mean(
