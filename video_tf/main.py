@@ -10,13 +10,6 @@ import models
 
 NUM_CATEGORIES = 27
 
-"""
-27 categories:
-- Softmax, Adam: 60%, 1%
-- 1 layer NN, Adam, 2000 iterations: 84%, 4%
-- 2 layer NN, Adam, 2000 iterations: 83%, 13%
-"""
-
 def load_data(path, dict_key, N):
     filenames = glob.glob(os.path.join(path, '*.mat'))
 
