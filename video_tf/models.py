@@ -1,6 +1,6 @@
 import tensorflow as tf
 
-def train_softmax(NUM_CATEGORIES, X_to_train, y_to_train, iterations):
+def train_softmax(NUM_CATEGORIES, X_to_train, y_to_train, iterations, learning_rate=0.002):
     """train the model"""
 
     N = X_to_train.shape[1]
@@ -23,7 +23,7 @@ def train_softmax(NUM_CATEGORIES, X_to_train, y_to_train, iterations):
         tf.nn.softmax_cross_entropy_with_logits(logits=y_predict, labels=y_train))
 
     # the classifier
-    train_step = tf.train.AdamOptimizer(0.002).minimize(cross_entropy)
+    train_step = tf.train.AdamOptimizer(learning_rate).minimize(cross_entropy)
 
     # start the session
     sess = tf.InteractiveSession()
@@ -31,7 +31,7 @@ def train_softmax(NUM_CATEGORIES, X_to_train, y_to_train, iterations):
     tf.global_variables_initializer().run()
 
     # train with 1000 iterations
-    for i in range(2000):
+    for i in range(iterations):
         _, loss_val = sess.run([train_step, cross_entropy], feed_dict={x_train: X_to_train, y_train: y_to_train})
         if i % 100 == 0:
             print('loss = ' + str(loss_val))
