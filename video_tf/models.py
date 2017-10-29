@@ -1,6 +1,6 @@
 import tensorflow as tf
 
-def train_softmax(NUM_CATEGORIES, X_to_train, y_to_train, iterations, learning_rate=0.002):
+def train_softmax(NUM_CATEGORIES, X_to_train, y_to_train, X_to_test, y_to_test, iterations, learning_rate=0.002):
     """train the model"""
 
     N = X_to_train.shape[1]
@@ -30,11 +30,19 @@ def train_softmax(NUM_CATEGORIES, X_to_train, y_to_train, iterations, learning_r
 
     tf.global_variables_initializer().run()
 
+    correct_prediction = tf.equal(tf.argmax(y_predict, 1), tf.argmax(y_train, 1))
+    accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+
     # train with 1000 iterations
     for i in range(iterations):
         _, loss_val = sess.run([train_step, cross_entropy], feed_dict={x_train: X_to_train, y_train: y_to_train})
         if i % 100 == 0:
+            train_acc_val = sess.run(accuracy, feed_dict={x_train: X_to_train, y_train: y_to_train})
+            test_acc_val = sess.run(accuracy, feed_dict={x_train: X_to_test, y_train: y_to_test})
+
             print('loss = ' + str(loss_val))
+            print('train acc = ' + str(train_acc_val))
+            print('test acc = ' + str(test_acc_val))
 
     return sess, y_predict, x_train, y_train
 
