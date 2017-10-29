@@ -44,7 +44,10 @@ def main():
     X, y = load_data('skeleton', 'd_skel', 20*3*41)
     X_to_train, X_to_test, y_to_train, y_to_test = cv.train_test_split(X, y, test_size=0.2, random_state=1)
 
-    y_predict, y_train = models.train_nn(NUM_CATEGORIES, X_to_train, X_to_test, y_to_train, y_to_test)
+    sess, y_predict, x_train, y_train = models.train_nn(NUM_CATEGORIES,
+                                                        X_to_train, y_to_train,
+                                                        layers=(512, 256, 128),
+                                                        iterations=2000)
 
     correct_prediction = tf.equal(tf.argmax(y_predict, 1), tf.argmax(y_train, 1))
     accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))

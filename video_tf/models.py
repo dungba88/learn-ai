@@ -1,6 +1,6 @@
 import tensorflow as tf
 
-def train_softmax(NUM_CATEGORIES, X_to_train, X_to_test, y_to_train, y_to_test):
+def train_softmax(NUM_CATEGORIES, X_to_train, y_to_train, iterations):
     """train the model"""
 
     N = X_to_train.shape[1]
@@ -36,9 +36,9 @@ def train_softmax(NUM_CATEGORIES, X_to_train, X_to_test, y_to_train, y_to_test):
         if i % 100 == 0:
             print('loss = ' + str(loss_val))
 
-    return y_predict, y_train
+    return sess, y_predict, x_train, y_train
 
-def train_nn(NUM_CATEGORIES, X_to_train, X_to_test, y_to_train, y_to_test):
+def train_nn(NUM_CATEGORIES, X_to_train, y_to_train, layers, iterations):
     """train the model"""
 
     N = X_to_train.shape[1]
@@ -49,16 +49,13 @@ def train_nn(NUM_CATEGORIES, X_to_train, X_to_test, y_to_train, y_to_test):
     # the ground truth vector
     y_train = tf.placeholder(tf.float32, [None, NUM_CATEGORIES])
 
-    layer1 = tf.layers.dense(x_train, 512)
-    layer1_relu = tf.nn.relu(layer1)
+    layer_i = x_train
+    layer_i_relu = None
+    for i in layers:
+        layer_i = tf.layers.dense(layer_i, i)
+        layer_i_relu = tf.nn.relu(layer_i)
 
-    layer2 = tf.layers.dense(layer1_relu, 256)
-    layer2_relu = tf.nn.relu(layer2)
-
-    layer3 = tf.layers.dense(layer2_relu, 64)
-    layer3_relu = tf.nn.relu(layer3)
-
-    y_predict = tf.layers.dense(layer3_relu, NUM_CATEGORIES)
+    y_predict = tf.layers.dense(layer_i_relu, NUM_CATEGORIES)
 
     # the loss function
     cross_entropy = tf.reduce_mean(
@@ -73,9 +70,9 @@ def train_nn(NUM_CATEGORIES, X_to_train, X_to_test, y_to_train, y_to_test):
     tf.global_variables_initializer().run()
 
     # train with 1000 iterations
-    for i in range(2000):
+    for i in range(iterations):
         _, loss_val = sess.run([train_step, cross_entropy], feed_dict={x_train: X_to_train, y_train: y_to_train})
         if i % 100 == 0:
             print('loss = ' + str(loss_val))
 
-    return y_predict, y_train
+    return sess, y_predict, x_train, y_train
