@@ -46,8 +46,8 @@ def main():
 
     sess, y_predict, x_train, y_train = models.train_nn(NUM_CATEGORIES,
                                                         X_to_train, y_to_train,
-                                                        layers=(512, 256, 128),
-                                                        iterations=2000)
+                                                        layers=(256, 256),
+                                                        iterations=1000)
 
     correct_prediction = tf.equal(tf.argmax(y_predict, 1), tf.argmax(y_train, 1))
     accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))

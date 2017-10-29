@@ -38,7 +38,7 @@ def train_softmax(NUM_CATEGORIES, X_to_train, y_to_train, iterations):
 
     return sess, y_predict, x_train, y_train
 
-def train_nn(NUM_CATEGORIES, X_to_train, y_to_train, layers, iterations):
+def train_nn(NUM_CATEGORIES, X_to_train, y_to_train, layers, iterations, learning_rate=0.0005):
     """train the model"""
 
     N = X_to_train.shape[1]
@@ -62,7 +62,7 @@ def train_nn(NUM_CATEGORIES, X_to_train, y_to_train, layers, iterations):
         tf.nn.softmax_cross_entropy_with_logits(logits=y_predict, labels=y_train))
 
     # the classifier
-    train_step = tf.train.AdamOptimizer(0.0005).minimize(cross_entropy)
+    train_step = tf.train.AdamOptimizer(learning_rate).minimize(cross_entropy)
 
     # start the session
     sess = tf.InteractiveSession()
