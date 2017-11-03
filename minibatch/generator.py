@@ -12,8 +12,9 @@ class MiniBatchGenerator(object):
         self.idx = 0
         random.shuffle(self.arr)
 
-    def load_next_batch(self, file_dict, batch_size):
-        return self.load_batch(self.next_batch(batch_size), file_dict)
+    def load_next_batch(self, batch_size: int, X_mapper: callable, y_mapper: callable):
+        batch = self.next_batch(batch_size)
+        return np.array([X_mapper(item) for item in batch]), np.array([y_mapper(item) for item in batch])
 
     def next_batch(self, batch_size):
         remaining = len(self.arr) - self.idx
@@ -24,9 +25,3 @@ class MiniBatchGenerator(object):
         result = self.arr[self.idx:self.idx + batch_size]
         self.idx += batch_size
         return result
-
-    def load_batch(self, batch, file_dict: dict):
-        if not batch:
-            return None
-        data = np.array([np.load(file_dict[idx]) for idx in batch])
-        return data, batch
