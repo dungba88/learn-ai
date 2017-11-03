@@ -9,7 +9,7 @@ class MiniBatchGenerator(object):
         self.y_mapper = y_mapper
         self.train_idx = 0
         self.train_size = max_size
-        self.test_idx = max_size + 1
+        self.test_idx = max_size
         random.shuffle(self.arr)
 
     def split_train_test(self, test_size=0.2):
@@ -25,6 +25,11 @@ class MiniBatchGenerator(object):
         batch = self.__next_batch(batch_size, self.test_idx, len(self.arr))
         self.test_idx += len(batch)
         return self.__load(batch)
+
+    def reset(self):
+        self.train_idx = 0
+        self.test_idx = self.train_size
+        random.shuffle(self.arr)
 
     def __next_batch(self, batch_size, first_idx, last_idx):
         remaining = last_idx - first_idx
