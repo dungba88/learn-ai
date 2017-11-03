@@ -1,2 +1,2 @@
 # learn-ai
-For learning AI
+For Aiur
