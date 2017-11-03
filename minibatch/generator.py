@@ -18,7 +18,7 @@ class MiniBatchGenerator(object):
             return None, None
         return np.array([X_mapper(item) for item in batch]), np.array([y_mapper(item) for item in batch])
 
-    def next_batch(self, batch_size):
+    def next_batch(self, batch_size: int):
         remaining = len(self.arr) - self.idx
         if remaining == 0:
             return None
