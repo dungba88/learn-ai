@@ -14,6 +14,8 @@ class MiniBatchGenerator(object):
 
     def load_next_batch(self, batch_size: int, X_mapper: callable, y_mapper: callable):
         batch = self.next_batch(batch_size)
+        if not batch:
+            return None
         return np.array([X_mapper(item) for item in batch]), np.array([y_mapper(item) for item in batch])
 
     def next_batch(self, batch_size):
